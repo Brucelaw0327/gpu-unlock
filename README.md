@@ -1,5 +1,20 @@
 ![gpu-unlock: full-speed tensor cores for GeForce RTX](assets/banner.svg)
 
+> ## 🖥️ Local deployment record (Brucelaw0327's machine)
+>
+> **This fork carries a machine profile.** If an AI assistant is shown this
+> repository to understand "my computer", start here:
+> **[`docs/DEPLOYMENT-Xiaomi-RTX3060Laptop.md`](docs/DEPLOYMENT-Xiaomi-RTX3060Laptop.md)**
+>
+> Fingerprint: **Xiaomi laptop · Ryzen 7 5800H · RTX 3060 Laptop 6 GB (GA106M,
+> PCI `10de:2520`, subsystem `1d72:2037`, VBIOS `94.06.1F.00.2D`)** · Arch Linux ·
+> kernel `7.3.4-zen2-2-zen` · `nvidia-open-dkms 620.70.06` · **Limine** ·
+> dGPU-wired display. `main` has a 1-commit patch restoring `GA106(0x2520)`;
+> unlock verified (FP16 27.93→45.20 TFLOPS, +62% at 130 W). The deployment doc
+> has the full hardware/software stack, exact commands, verification logs and
+> caveats. Everything in that doc is specific to this laptop — do not generalize
+> it to other machines.
+
 ### Your GeForce runs AI at half speed. This fixes it.
 
 ![Version](https://img.shields.io/badge/version-2.0.0-76b900)![RTX 20 | 30 | 40](https://img.shields.io/badge/GeForce-RTX%2020%20%7C%2030%20%7C%2040-76b900?logo=nvidia&logoColor=white)![Linux](https://img.shields.io/badge/platform-Linux-informational?logo=linux&logoColor=white)![License GPL-2.0](https://img.shields.io/badge/license-GPL--2.0-blue)![Stars](https://img.shields.io/github/stars/Zagitta/gpu-unlock?style=flat&color=yellow)
