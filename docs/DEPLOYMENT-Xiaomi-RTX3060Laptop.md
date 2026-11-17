@@ -57,15 +57,34 @@
   `gpu_unlock` before `nvidia`. The old `gpu_unlock?` modules-load.d bug
   (upstream #29) is already fixed in current version.
 
-## Power limit note
+## Power limit and Dynamic Boost (nvidia-powerd)
 
-- Stock power limit is **95 W** (VBIOS default), hard max **130 W**.
-- On `nvidia-open-dkms 620.70.06`, `nvidia-smi -pl 130` returns
-  "Changing power management limit is not supported"; the open module does not
-  expose the NVML power-limit control. 130 W was achieved by other means and a
-  reboot preserved `enforced.power.limit = 130 W`.
-- On the older proprietary `615.78.08` driver the 130 W cap was reachable in a
-  different way (see issue #125).
+This is the single most important non-obvious piece of this machine's setup.
+
+- The GPU's **hard max is 130 W** (115 W base + 15 W Dynamic Boost). The **95 W**
+  seen early on is NOT a hardware or VBIOS limit and NOT a driver-open-vs-proprietary
+  issue — it is the static base power wall that applies when
+  **`nvidia-powerd.service` (Dynamic Boost daemon) is not running**.
+- With the daemon enabled (`sudo systemctl enable --now nvidia-powerd`, already
+  enabled/active here), the GPU power limit follows the firmware's three
+  performance profiles via `platform_profile`:
+
+  | KDE profile | `platform_profile` | GPU power limit |
+  | --- | --- | --- |
+  | 静谧 Silence | `low-power` | 95 W |
+  | 均衡 Balance | `balanced-performance` | 100 W |
+  | 极速 Turbo | `performance` | 130 W |
+
+- `nvidia-smi -pl 130` returns "Changing power management limit is not supported"
+  **because the VBIOS locks the NVML control on this laptop**, regardless of
+  powerd. It is the wrong tool here — use the performance profile instead.
+- Current state: `platform_profile = performance`, `nvidia-powerd` active,
+  `enforced.power.limit = 130 W` (survives reboot).
+- This machine's performance profiles (and the fact that KDE/ppd need a bridge
+  to drive them correctly) are documented in full in the companion repo
+  **[`Brucelaw0327/redmi-g-2021-ryzen-linux`](https://github.com/Brucelaw0327/redmi-g-2021-ryzen-linux)**.
+  That repo also carries the `bitland-mifs-wmi` driver fixes that make profile
+  switching work on this Redmi G 2021 / TIMI A7S (TM2037) board.
 
 ## Verification evidence
 

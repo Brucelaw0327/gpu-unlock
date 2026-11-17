@@ -14,6 +14,10 @@
 > has the full hardware/software stack, exact commands, verification logs and
 > caveats. Everything in that doc is specific to this laptop — do not generalize
 > it to other machines.
+>
+> Companion repo: **[`Brucelaw0327/redmi-g-2021-ryzen-linux`](https://github.com/Brucelaw0327/redmi-g-2021-ryzen-linux)**
+> covers the machine's performance profiles, `bitland-mifs-wmi` driver fixes and
+> the `nvidia-powerd` / Dynamic Boost setup that gates 95 W vs 130 W.
 
 ### Your GeForce runs AI at half speed. This fixes it.
 
